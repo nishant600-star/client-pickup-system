@@ -39,9 +39,12 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 
 # Home route
-@app.get("/")
-def home():
-    return {"message": "Client Pickup System Running"}
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse(
+        "dashboard.html",
+        {"request": request}
+    )
 
 
 @app.get("/dashboard-page", response_class=HTMLResponse)
