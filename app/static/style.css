@@ -1,0 +1,137 @@
+/* ===== FONT ===== */
+body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: #f1f5f9;
+    margin: 0;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    z-index: 10;
+    /* keep above watermark */
+    background: linear-gradient(180deg, #0f172a, #020617);
+    color: white;
+    padding: 25px;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h4 {
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    color: #cbd5f5;
+    text-decoration: none;
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+.sidebar a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    transform: translateX(4px);
+}
+
+/* ===== CONTENT AREA ===== */
+.content {
+    margin-left: 280px;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+}
+
+/* ===== LOGO WATERMARK FINAL ===== */
+
+.content::before {
+    content: "";
+    position: fixed;
+    top: 55%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    /* no rotate */
+    width: 520px;
+    height: 520px;
+    background-image: url("/static/logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.14;
+    /* color visible but soft */
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(0.3px);
+    /* premium soft feel */
+}
+
+
+
+/* ===== CARD DESIGN ===== */
+.card-modern {
+    border-radius: 16px;
+    padding: 25px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+    border: 1px solid rgba(2, 6, 23, 0.04);
+    transition: 0.3s ease;
+}
+
+.card-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.12);
+}
+
+.card-modern h5 {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.card-modern h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-top: 10px;
+    color: #0f172a;
+}
+
+/* ===== PAGE TITLE ===== */
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+/* ===== BUTTONS ===== */
+.btn-modern {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    color: white;
+    font-weight: 500;
+    transition: 0.25s;
+}
+
+.btn-modern:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* ===== INPUTS ===== */
+.form-control {
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}

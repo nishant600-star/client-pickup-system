@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">Client Pickup Dashboard</h2>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h5>Total Clients</h5>
+            <h2 id="totalClients">0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h5>Total Pickups</h5>
+            <h2 id="totalPickups">0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h5>Today's Pickups</h5>
+            <h2 id="todayPickups">0</h2>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    fetch("/dashboard")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("totalClients").innerText = data.total_clients;
+            document.getElementById("totalPickups").innerText = data.total_pickups;
+            document.getElementById("todayPickups").innerText = data.today_pickups;
+        });
+</script>
+
+<canvas id="pickupChart" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    fetch("/dashboard")
+        .then(res => res.json())
+        .then(data => {
+
+            const labels = data.client_summary.map(c => c.client_name);
+            const values = data.client_summary.map(c => c.total_pickups);
+
+            new Chart(document.getElementById("pickupChart"), {
+                type: "bar",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Pickups by Client",
+                        data: values
+                    }]
+                }
+            });
+        });
+</script>
+
+{% endblock %}

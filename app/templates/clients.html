@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="page-title">Clients Management</h2>
+
+<!-- ===== ADD CLIENT FORM ===== -->
+<div class="card-modern mb-4">
+
+    <h5 class="mb-3">Add Client</h5>
+
+    <div class="row g-3">
+
+        <div class="col-md-4">
+            <input type="text" id="clientId" class="form-control" placeholder="Client Unique ID">
+        </div>
+
+        <div class="col-md-4">
+            <input type="text" id="clientName" class="form-control" placeholder="Client Name">
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn-modern w-100" onclick="addClient()">
+                Add Client
+            </button>
+        </div>
+
+    </div>
+
+    <div id="msg" class="mt-3"></div>
+
+</div>
+
+
+<!-- ===== CLIENT TABLE ===== -->
+<div class="card-modern">
+
+    <h5 class="mb-3">Client List</h5>
+
+    <table class="table table-borderless align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client Code</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody id="clientTable"></tbody>
+    </table>
+
+</div>
+
+
+<script>
+
+    function loadClients() {
+        fetch("/clients")
+            .then(res => res.json())
+            .then(data => {
+
+                let rows = "";
+
+                data.forEach(c => {
+                    rows += `
+                    <tr>
+                        <td>${c.id}</td>
+                        <td>${c.client_id}</td>
+                        <td>${c.name}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger"
+                                onclick="deleteClient(${c.id})">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                });
+
+                document.getElementById("clientTable").innerHTML = rows;
+            });
+    }
+
+    function addClient() {
+
+        const id = document.getElementById("clientId").value;
+        const name = document.getElementById("clientName").value;
+
+        fetch(`/clients?client_id=${id}&name=${name}`, {
+            method: "POST"
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("msg").innerHTML =
+                    `<div class="alert alert-success">Client added</div>`;
+                loadClients();
+            });
+    }
+
+    function deleteClient(id) {
+        fetch(`/clients/${id}`, { method: "DELETE" })
+            .then(() => loadClients());
+    }
+
+    loadClients();
+
+</script>
+
+{% endblock %}
